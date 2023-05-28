@@ -1,11 +1,13 @@
 import { PropsWithChildren } from "react";
-import { useModal } from "@providers";
+import { useLoadingOverlay, useModal } from "@providers";
 import Footer from "./Footer";
 import Header from "./Header";
 import Modal from "./Modal/Modal";
+import LoadingOverlay from "./LoadingOverlay/LoadingOverlay";
 
 const Layout = ({ children }: PropsWithChildren) => {
   const { isModalOpen, componentToRender } = useModal();
+  const { isLoading } = useLoadingOverlay();
   console.log("i am here ??", isModalOpen, componentToRender);
   return (
     <>
@@ -13,6 +15,7 @@ const Layout = ({ children }: PropsWithChildren) => {
       <main>{children}</main>
       <Footer />
       {isModalOpen && <Modal />}
+      {isLoading && <LoadingOverlay />}
     </>
   );
 };

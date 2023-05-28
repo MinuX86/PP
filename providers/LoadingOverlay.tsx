@@ -6,6 +6,7 @@ import {
   useContext,
   useState,
 } from "react";
+import DefaultLoadingOverlay from "../components/Layout/LoadingOverlay/DefaultLoadingOverlay";
 
 type LoadingOverlay = {
   isLoading: boolean;
@@ -39,8 +40,7 @@ export const LoadingOverlayProvider = ({ children }: PropsWithChildren) => {
       }
       if (typeof c === "string") {
         setComponentToRender(
-          //TODO: update defualt overlay UI
-          <></>
+          <DefaultLoadingOverlay text={c} size={size} color={color} />
         );
       } else {
         setComponentToRender(c);
