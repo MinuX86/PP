@@ -1,3 +1,4 @@
+"use client";
 import { PropsWithChildren } from "react";
 import { useLoadingOverlay, useModal } from "@providers";
 import Footer from "./Footer";

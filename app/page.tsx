@@ -1,3 +1,4 @@
+"use client";
 import LoginModal from "../components/LoginModal";
 import { useModal } from "@providers";
 
