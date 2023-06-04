@@ -1,5 +1,7 @@
+const { withTV } = require("tailwind-variants/transformer");
+
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+module.exports = withTV({
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -13,23 +15,14 @@ module.exports = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
     },
-
     screens: {
-      sm: "300px",
-      // => @media (min-width: 300px) { ... }
-
-      md: "768px",
-      // => @media (min-width: 768px) { ... }
-
-      lg: "1024px",
-      // => @media (min-width: 1024px) { ... }
-
-      xl: "1280px",
-      // => @media (min-width: 1280px) { ... }
-
-      "2xl": "1536px",
-      // => @media (min-width: 1536px) { ... }
+      xs: "320px", // Extra Small devices (phones, portrait)
+      sm: "576px", // Small devices (phones, landscape)
+      md: "768px", // Medium devices (tablets)
+      lg: "992px", // Large devices (desktops)
+      xl: "1200px", // Extra Large devices (large desktops)
+      "2xl": "1536px", // Extra Extra Large devices (larger desktops)
     },
   },
   plugins: [],
-};
+});
