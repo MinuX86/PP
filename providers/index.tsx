@@ -8,7 +8,7 @@ import { Session } from "next-auth";
 export { useModal, useDrawer, useLoadingOverlay };
 
 type Props = PropsWithChildren & {
-  session?: Session;
+  session: Session;
 };
 
 const Providers = ({ children, session }: Props) => {
