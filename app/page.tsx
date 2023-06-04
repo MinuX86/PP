@@ -1,14 +1,9 @@
-"use client";
-import LoginModal from "../components/LoginModal";
-import { useModal } from "@providers";
-
-export default function Home() {
-  const { openModal } = useModal();
+export default async function Home() {
   return (
-    <div className="bg-gray-100 min-h-screen">
+    <section className="flex justify-center items-center h-screen">
       <div className="container mx-auto py-8">
-        <div className="max-w-lg mx-auto bg-white shadow-md rounded-lg p-6">
-          <h1 className="text-2xl font-bold mb-4">John Doe</h1>
+        <section className="max-w-lg mx-auto bg-white shadow-md rounded-lg p-6">
+          <h1 className="text-2xl font-bold mb-4">Minwoo Ra</h1>
           <p className="text-gray-700 mb-4">Front-End Developer</p>
           <ul className="mb-4">
             <li className="flex items-center text-gray-600">
@@ -68,11 +63,8 @@ export default function Home() {
             is to create delightful experiences for users by crafting clean and
             efficient code.
           </p>
-        </div>
+        </section>
       </div>
-      <button onClick={() => openModal(<LoginModal />, "Login Modal")}>
-        open Modal
-      </button>
-    </div>
+    </section>
   );
 }

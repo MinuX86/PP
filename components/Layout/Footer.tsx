@@ -1,5 +1,5 @@
 const Footer = (): JSX.Element => {
-  return <div>Footer</div>;
+  return <section className="flex justify-center items-center">Footer</section>;
 };
 
 export default Footer;

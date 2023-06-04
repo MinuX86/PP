@@ -1,15 +1,17 @@
 "use client";
-import { PropsWithChildren } from "react";
+
+import { PropsWithChildren, useEffect } from "react";
 import { useLoadingOverlay, useModal } from "@providers";
 import Footer from "./Footer";
 import Header from "./Header";
 import Modal from "./Modal/Modal";
 import LoadingOverlay from "./LoadingOverlay/LoadingOverlay";
+import { useSession } from "next-auth/react";
 
 const Layout = ({ children }: PropsWithChildren) => {
-  const { isModalOpen, componentToRender } = useModal();
+  const { isModalOpen } = useModal();
   const { isLoading } = useLoadingOverlay();
-  console.log("i am here ??", isModalOpen, componentToRender);
+
   return (
     <>
       <Header />

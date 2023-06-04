@@ -1,5 +1,7 @@
 const Projects = (): JSX.Element => {
-  return <>Projects</>;
+  return (
+    <section className="flex  justify-center items-center">Projects</section>
+  );
 };
 
 export default Projects;
