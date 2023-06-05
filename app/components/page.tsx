@@ -33,6 +33,11 @@ const Components = () => {
       desc: "Google auth",
       onClick: () => signIn(providers?.google.id),
     },
+    {
+      name: "normal login",
+      desc: "normal auth",
+      onClick: () => signIn(),
+    },
   ];
 
   useEffect(() => {
@@ -45,8 +50,16 @@ const Components = () => {
   return (
     <section className="h-full pb-20">
       <div className="flex flex-col justify-center items-center gap-20">
-        <section className="pt-10">
-          <h1>Login user: {session?.user?.name || status}</h1>
+        <section className="flex flex-row items-center pt-10 gap-4">
+          <h1>Login user: {session?.user?.name || status}</h1>{" "}
+          {session?.user != null && (
+            <button
+              className="border boder-gray p-1 rounded-lg"
+              onClick={() => signOut()}
+            >
+              signOut
+            </button>
+          )}
         </section>
         <section>
           {componentList.map((item, idx) => {
