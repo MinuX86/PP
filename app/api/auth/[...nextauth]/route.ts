@@ -82,18 +82,24 @@ const handler = NextAuth({
     signIn: "/auth/login",
   },
   callbacks: {
-    // async jwt({ token, account }) {
-    //   // Persist the OAuth access_token to the token right after signin
-    //   if (account) {
-    //     token.accessToken = account.access_token;
-    //   }
-    //   return token;
-    // },
-    async session({ session }) {
+    async jwt({ token, user, account, trigger, session }) {
+      // Persist the OAuth access_token to the token right after signin
+      if (account) {
+        token.accessToken = account.access_token;
+      }
+
+      if (trigger === "update") {
+        return { ...token, ...session.user };
+      }
+
+      return { ...token, ...user };
+    },
+    async session({ session, token, user }) {
       // store the user id from MongoDB to session
       if (session?.user?.email != null) {
         const sessionUser = await User.findOne({ email: session.user.email });
         if (sessionUser != null) {
+          session.user = token;
           return session;
         }
       }
