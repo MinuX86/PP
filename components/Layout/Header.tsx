@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const Header = (): JSX.Element => {
   return (
-    <section className="flex flex-row h-[80px] w-full justify-between items-center border border-gray px-24">
+    <header className="flex flex-row h-[80px] w-full justify-between items-center border border-gray px-24">
       <Link href="/">
         <div className="flex flex-row justify-around gap-4">
           <div>Logo</div>
@@ -23,7 +23,7 @@ const Header = (): JSX.Element => {
           <p>Contact</p>
         </Link>
       </div>
-    </section>
+    </header>
   );
 };
 

@@ -1,9 +1,16 @@
 import { Schema, model, models } from "mongoose";
 
 const UserSchema = new Schema({
+  id: {
+    type: String,
+  },
   email: {
     type: String,
     unique: [true, "Email already exists!"],
+    required: [true, "Email is required!"],
+  },
+  password: {
+    type: String,
     required: [true, "Email is required!"],
   },
   username: {
@@ -15,6 +22,9 @@ const UserSchema = new Schema({
     // ],
   },
   image: {
+    type: String,
+  },
+  jwtToken: {
     type: String,
   },
 });

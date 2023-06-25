@@ -3,14 +3,14 @@ import { set, connect, ConnectOptions } from "mongoose";
 // track the connection
 let isConnected = false;
 
-// set the connection options
-const connectOptions: ConnectOptions = {
-  dbName: "profile",
-  // useNewUrlParser: true,
-  // useUnifiedTopology: true,
-};
-
-export const connectToDB = async () => {
+export default async function connectToDB(
+  // set the connection options
+  connectOptions: ConnectOptions = {
+    dbName: "profile",
+    // useNewUrlParser: true,
+    // useUnifiedTopology: true,
+  }
+) {
   set("strictQuery", true);
 
   if (isConnected) {
@@ -30,4 +30,4 @@ export const connectToDB = async () => {
   } catch (error) {
     console.log(error);
   }
-};
+}

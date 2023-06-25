@@ -2,8 +2,9 @@ import NextAuth, { Session } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import KakaoProvider from "next-auth/providers/kakao";
-import User from "@models/user";
-import { connectToDB } from "@db/mongodb";
+import User from "@server/models/user";
+import connectToDB from "@server/database";
+import { signIn } from "next-auth/react";
 
 const handler = NextAuth({
   providers: [
@@ -41,7 +42,14 @@ const handler = NextAuth({
         // You can also use the `req` object to obtain additional parameters
         // (i.e., the request IP address)
 
-        const { username, password } = credentials as any;
+        // email,
+        // username,
+        // password,
+        // isSignup,
+        // redirect: true,
+        // callbackUrl: "/components",
+
+        const { email, username, password, isSignup } = credentials as any;
         // const res = await fetch("/your/endpoint", {
         //   method: "POST",
         //   body: JSON.stringify({
@@ -50,36 +58,63 @@ const handler = NextAuth({
         //   }),
         //   headers: { "Content-Type": "application/json" },
         // });
+        await connectToDB();
 
-        const mockUser = {
-          id: 1,
-          name: username,
-          email: "naminwoo8@gmail.com",
-          accessToken: "accessToken bro !",
-          ok: true,
-        };
+        const res = await User.findOne({ email });
 
-        const user = JSON.parse(JSON.stringify(mockUser));
-        // console.log("i am here ??", user);
-        // const user = await res.json();
+        if (isSignup && !res) {
+          const newUser = await User.create({
+            email,
+            username,
+            password,
+          });
+          console.log("i am here ??", newUser);
 
-        console.log("i am here ??", user);
-        return user;
-        // If no error and we have user data, return it
-        // if (res.ok && user) {
-        //   return user;
-        // }
-        // Return null if user data could not be retrieved
-        return null;
+          return newUser;
+        } else {
+          // const mockUser = {
+          //   id: 1,
+          //   name: username,
+          //   email: "naminwoo8@gmail.com",
+          //   accessToken: "accessToken bro !",
+          //   ok: true,
+          // };
+          if (res != null) {
+            const user = JSON.parse(JSON.stringify(res));
+            // console.log("i am here ??", user);
+            // const user = await res.json();
+
+            console.log("i am here ??", user);
+            return user;
+            // If no error and we have user data, return it
+            // if (res.ok && user) {
+            //   return user;
+            // }
+            // Return null if user data could not be retrieved
+            return null;
+          } else {
+            throw new Error("no user found!");
+          }
+        }
       },
     }),
   ],
   session: {
     strategy: "jwt",
   },
+
+  // signIn: string
+  // signOut: string
+  // /** Error code passed in query string as ?error= */
+  // error: string
+  // verifyRequest: string
+  // /** If set, new users will be directed here on first sign in */
+  // newUser: string
   pages: {
     //customize login UI with route
-    signIn: "/auth/login",
+    signIn: "/auth/signIn",
+    // signOut: "/auth/signout",
+    // newUser: "/auth/signUp",
   },
   callbacks: {
     async jwt({ token, user, account, trigger, session }) {
@@ -96,6 +131,7 @@ const handler = NextAuth({
     },
     async session({ session, token, user }) {
       // store the user id from MongoDB to session
+      await connectToDB();
       if (session?.user?.email != null) {
         const sessionUser = await User.findOne({ email: session.user.email });
         if (sessionUser != null) {
@@ -108,6 +144,10 @@ const handler = NextAuth({
     //authorize -> signIn as user ?
     async signIn({ account, profile, user, credentials }) {
       try {
+        const data = credentials;
+
+        console.log("i am here 3??", data);
+
         await connectToDB();
 
         // check if user already exists

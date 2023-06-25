@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { ComponentItem, ComponentItemType } from "@components";
 import { LoginModal, Button } from "@components";
 import {
@@ -22,6 +23,8 @@ const Components = () => {
     ClientSafeProvider
   > | null>(null);
 
+  const router = useRouter();
+
   const componentList: Array<ComponentItemType> = [
     {
       name: "Modal",
@@ -37,6 +40,16 @@ const Components = () => {
       name: "normal login",
       desc: "normal auth",
       onClick: () => signIn(),
+    },
+    {
+      name: "signUp",
+      desc: "normal auth signup",
+      onClick: () => signIn(),
+    },
+    {
+      name: "add book",
+      desc: "Add book into DB",
+      onClick: () => router.push("/book"),
     },
   ];
 
